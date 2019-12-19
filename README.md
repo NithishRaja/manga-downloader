@@ -16,6 +16,5 @@
 
 ## Updates
 
-* Make each chapter into a PDF
 * Check for a new chapter once a week
 * Add support for other mangas too
