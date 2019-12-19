@@ -16,6 +16,7 @@
 
 ## Updates
 
+* Make each chapter into a PDF
 * Get latest chapter number automatically
 * If no chapter limit is mentioned all chapters must be downloaded
 * Check for a new chapter once a week
