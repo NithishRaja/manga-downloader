@@ -77,7 +77,7 @@ if len(sys.argv) > 1 and latestChapter > int(sys.argv[1]):
 threads = ["Dummy"]
 
 # Iterate over each chapter and Initialise a thread to download chapter
-for i in range(1, chapterLimit):
+for i in range(1, chapterLimit+1):
     # Initialise threads for each chapter
     threadObj = threading.Thread(target=getPages, args=[i])
     # Append thread to array
@@ -87,7 +87,7 @@ for i in range(1, chapterLimit):
 activeThreadLimit = 5
 
 # Iterato over all threads
-for currentThread in range(1, chapterLimit):
+for currentThread in range(1, chapterLimit+1):
     # Check if current thread is under the limit
     if not currentThread > activeThreadLimit:
         # Current thread is under the limit
