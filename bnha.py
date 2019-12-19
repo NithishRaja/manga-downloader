@@ -10,6 +10,7 @@ import threading
 import re
 import requests
 import bs4
+import img2pdf
 
 # Set base dir location
 location = os.path.join(os.getcwd(), "BNHA")
@@ -40,29 +41,27 @@ def getPages(chapterNo):
     # Getting only the links
     links = resHTML.select('img[src]')
 
-    # Set chapter dir location
-    chapterDir = os.path.join(location, "Chapter "+str(chapterNo))
-
-    # Make new dir for chapter
-    if not os.path.exists(chapterDir):
-        os.makedirs(chapterDir)
+    # Initialise pages array
+    pages = []
 
     # Iterate over each image
-    for i in range(len(links)):
+    for currentPage in range(len(links)):
         # Get image URL
-        imageURL = links[i].attrs["src"]
+        imageURL = links[currentPage].attrs["src"]
 
         # Get image from its URL
         image = requests.get(imageURL)
 
-        # Set file name
-        filename = "Page "+str(i+1)+".jpeg"
+        # Append image to pages array
+        pages.append(image.content)
 
-        # Save image to file
-        fileObject = open(os.path.join(chapterDir, filename), "wb")
-        for chunk in image.iter_content(1024):
-            fileObject.write(chunk)
-        fileObject.close()
+    # Convert images into pdf format
+    pdf_bytes = img2pdf.convert(pages)
+
+    # Write to pdf
+    fileObject = open(os.path.join(location, "Chapter "+str(chapterNo)+".pdf"), "wb")
+    fileObject.write(pdf_bytes)
+    fileObject.close()
 
 # Set latest chapter
 latestChapter = int(getLatestChapter())
