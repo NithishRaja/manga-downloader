@@ -8,6 +8,7 @@ import os
 import sys
 import threading
 import re
+import time
 import requests
 import bs4
 import img2pdf
@@ -103,25 +104,14 @@ for key in chapterList.keys():
         # Append thread to array
         threads.append(threadObj)
 
-# Iterate over each chapter and Initialise a thread to download chapter
-# for i in range(0, chapterLimit):
-#     # Initialise threads for each chapter
-#     threadObj = threading.Thread(target=getPages, args=[i])
-#     # Append thread to array
-#     threads.append(threadObj)
-
 # Set active thread limit
 activeThreadLimit = 5
 
-# Iterato over all threads
-for currentThread in range(0, chapterLimit):
-    # Check if current thread is under the limit
-    if not currentThread > activeThreadLimit:
-        # Current thread is under the limit
-        # Start current thread
-        threads[currentThread].start()
-    else:
-        # Current thread is over the limit
-        # Wait for a thread to finish, then start
-        threads[currentThread-activeThreadLimit].join()
-        threads[currentThread].start()
+# Iterate over all threads
+for currentThread in threads:
+    # If no of active threads is greater than active thread limit, wait till a thread finishes execution
+    while threading.active_count() > activeThreadLimit:
+        # Wait for 3 seconds and check again
+        time.sleep(3)
+    # Start the thread
+    currentThread.start()
