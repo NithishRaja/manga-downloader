@@ -19,23 +19,33 @@ location = os.path.join(os.getcwd(), "BNHA")
 if not os.path.exists(location):
     os.makedirs(location)
 
-# Function to get chapters list
+# Function to get chapters list and latest chapter number
 def getChapterList():
     # Send request to get list of all chapters
     res = requests.get("https://myheromanga.com/")
+    # Set latest chapter search string
+    chapterNoSearchString = re.compile(r'\d+(\.\d+)?')
     # Parse HTML
     resHTML = bs4.BeautifulSoup(res.text, features="html.parser")
     # Get list containing all chapter numbers
-    list = resHTML.select("#Chapters_List a")
+    chapterListHTML = resHTML.select("#Chapters_List a")
     # Reverse list to have first chapter as first element
-    list.reverse()
+    chapterListHTML.reverse()
+    # Get latest chapter
+    latestChapter = int(chapterNoSearchString.search(chapterListHTML[-1].text).group())
+    # Initialise chapter dict
+    chapterList = {}
+    # Iteraate over all chapters
+    for chapter in chapterListHTML:
+        # Append element to chapter list
+        chapterList[chapterNoSearchString.search(chapter.text).group()] = chapter.attrs["href"]
     # Return latest chapter
-    return list
+    return [chapterList, latestChapter]
 
 # Function to get pages for given chapter
 def getPages(chapterNo):
     # Set chapter file name
-    fileName = os.path.join(location, "Chapter "+str(chapterNo+1)+".pdf")
+    fileName = os.path.join(location, "Chapter "+chapterNo+".pdf")
 
     # Check if chapter already exists
     if os.path.exists(fileName):
@@ -43,7 +53,7 @@ def getPages(chapterNo):
         return
 
     # Get chapter pages list
-    res = requests.get(chapterList[chapterNo].attrs["href"])
+    res = requests.get(chapterList[chapterNo])
     # Getting response HTML
     resHTML = bs4.BeautifulSoup(res.text, features="html.parser")
     # Getting only the links
@@ -68,13 +78,7 @@ def getPages(chapterNo):
     fileObject.close()
 
 # Call function to get chapter list
-chapterList = getChapterList()
-
-# Set latest chapter search string
-latestChapterSearchString = re.compile(r'\d+(\.\d+)?')
-
-# Set latest chapter
-latestChapter = int(latestChapterSearchString.search(chapterList[-1].text).group())
+chapterList, latestChapter = getChapterList()
 
 # Set chapter limit
 chapterLimit = latestChapter
@@ -86,12 +90,25 @@ if len(sys.argv) > 1 and latestChapter > int(sys.argv[1]):
 # Thread array
 threads = []
 
+# Iterate over each chapter
+for key in chapterList.keys():
+    # Check if current key is over chapter limit
+    if int(round(float(key))) > chapterLimit:
+        # Current key is greater than chapter limit
+        # Break out of loop
+        break;
+    else:
+        # Initialise threads for each chapter
+        threadObj = threading.Thread(target=getPages, args=[key])
+        # Append thread to array
+        threads.append(threadObj)
+
 # Iterate over each chapter and Initialise a thread to download chapter
-for i in range(0, chapterLimit):
-    # Initialise threads for each chapter
-    threadObj = threading.Thread(target=getPages, args=[i])
-    # Append thread to array
-    threads.append(threadObj)
+# for i in range(0, chapterLimit):
+#     # Initialise threads for each chapter
+#     threadObj = threading.Thread(target=getPages, args=[i])
+#     # Append thread to array
+#     threads.append(threadObj)
 
 # Set active thread limit
 activeThreadLimit = 5
