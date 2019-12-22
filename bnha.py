@@ -71,7 +71,7 @@ def getPages(chapterNo):
 chapterList = getChapterList()
 
 # Set latest chapter search string
-latestChapterSearchString = re.compile(r'\d+(\-\d+)?')
+latestChapterSearchString = re.compile(r'\d+(\.\d+)?')
 
 # Set latest chapter
 latestChapter = int(latestChapterSearchString.search(chapterList[-1].text).group())
