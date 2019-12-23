@@ -2,9 +2,14 @@
 
 ## Running the script
 
-* run `python bnha.py <chapter limit>`
+* run `python index.py <chapter limit>`
 * chapter limit is an optional argument
 * If no chapter limit is mentioned, all chapters are downloaded
+
+## Editing code
+
+* main code is inside **index.py** file
+* download logic is inside **bnha.py** file
 
 ## Features
 
