@@ -10,11 +10,11 @@ import requests, bs4, img2pdf
 # Define downloader class
 class Downloader:
     # Define init function
-    def __init__(this):
+    def __init__(this, baseURL):
         # Set base dir location
-        this.location = os.path.join(os.getcwd(), "BNHA")
+        this.location = os.path.join(os.getcwd(), baseURL[0])
         # Set base URL
-        this.baseURL = "https://myheromanga.com/"
+        this.baseURL = baseURL[1]
         # Set active thread limit
         this.activeThreadLimit = 5
         # Initialise threads array
