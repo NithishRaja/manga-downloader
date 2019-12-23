@@ -1,0 +1,8 @@
+# Package for HTTP requests
+requests
+
+# Package for parsing HTML
+bs4
+
+# Package for converting images to pdf
+img2pdf
