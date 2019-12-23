@@ -5,3 +5,5 @@ BNHA/*
 # Test script
 
 *test.py
+
+__pycache__/*
