@@ -1,9 +1,14 @@
-# BNHA chapters
+# Manga chapters
 
-BNHA/*
+"Boku no hero academia"/*
+"One punch man"/*
+"Dragon ball super"/*
+"Demon slayer"/*
 
 # Test script
 
 *test.py
+
+# Cache directories
 
 __pycache__/*
