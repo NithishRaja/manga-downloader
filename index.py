@@ -11,7 +11,8 @@ from downloader import Downloader
 baseURL = {
     "BNHA" : ("Boku no hero academia", "https://myheromanga.com/"),
     "OPM" : ("One punch man", "https://one-punchmanmanga.com/"),
-    "DBS" : ("Dragon ball super", "https://readdragonballsuper.com/")
+    "DBS" : ("Dragon ball super", "https://readdragonballsuper.com/"),
+    "DMNSLYR" : ("Demon slayer", "https://demonslayermanga.online/")
 }
 
 # Check if CLI argument for manga name is passed

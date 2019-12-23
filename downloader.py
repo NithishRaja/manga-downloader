@@ -25,6 +25,8 @@ class Downloader:
         this.chapterList = {}
         #Initialise chapter limit
         this.chapterLimit = 1
+        # Set image url attribute
+        this.imageURLAttribute = "data-src" if baseURL[0] == "Demon slayer" else "src"
 
         # Make new dir
         if not os.path.exists(this.location):
@@ -67,14 +69,14 @@ class Downloader:
         # Getting response HTML
         resHTML = bs4.BeautifulSoup(res.text, features="html.parser")
         # Getting only the links
-        links = resHTML.select('img[src]')
+        links = resHTML.select('img['+this.imageURLAttribute+']')
 
         # Initialise pages array
         pages = []
         # Iterate over each image
         for currentPage in range(len(links)):
             # Get image URL
-            imageURL = links[currentPage].attrs["src"]
+            imageURL = links[currentPage].attrs[this.imageURLAttribute]
             # Get image from its URL
             image = requests.get(imageURL)
             # Append image to pages array
