@@ -39,7 +39,7 @@ class Downloader:
     def getChapterList(this):
         # Send request to get list of all chapters
         res = requests.get(this.baseURL)
-        # Set latest chapter search string
+        # Set latest chapter number search string
         chapterNoSearchString = re.compile(r'\d+(\.\d+)?')
         # Parse HTML
         resHTML = bs4.BeautifulSoup(res.text, features="html.parser")
@@ -49,6 +49,18 @@ class Downloader:
         chapterListHTML.reverse()
         # Get latest chapter
         this.latestChapter = int(chapterNoSearchString.search(chapterListHTML[-1].text).group())
+        # Checking if chapter list starts from 1
+        if not int(chapterNoSearchString.search(chapterListHTML[0].text).group()) == 1:
+            # Get lowest chapter number
+            lowestChapter = int(chapterNoSearchString.search(chapterListHTML[0].text).group())
+            # Initialise chapter URL search string
+            chapterURLSearchString = re.compile(r'([a-zA-Z\-\/\.\:]+)')
+            # Get chapter URL template
+            chapterURLTemplate = chapterURLSearchString.search(chapterListHTML[0].attrs["href"]).group()
+            # Iterate over missing chapters and add them to chapterList
+            for chapterNo in range(1, lowestChapter):
+                # Append element to chapter list
+                this.chapterList[str(chapterNo)] = chapterURLTemplate+str(chapterNo)
         # Iteraate over all chapters
         for chapter in chapterListHTML:
             # Append element to chapter list

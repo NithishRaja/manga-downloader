@@ -12,7 +12,8 @@ baseURL = {
     "BNHA" : ("Boku no hero academia", "https://myheromanga.com/"),
     "OPM" : ("One punch man", "https://one-punchmanmanga.com/"),
     "DBS" : ("Dragon ball super", "https://readdragonballsuper.com/"),
-    "DMNSLYR" : ("Demon slayer", "https://demonslayermanga.online/")
+    "DMNSLYR" : ("Demon slayer", "https://demonslayermanga.online/"),
+    "HAIKYUU" : ("Haikyuu", "https://haikyuu-manga-online.com/")
 }
 
 # Check if CLI argument for manga name is passed
