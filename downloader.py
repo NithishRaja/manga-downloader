@@ -11,6 +11,11 @@ import requests, bs4, img2pdf
 class Downloader:
     # Define init function
     def __init__(this, baseURL):
+        """Initialise variables to default value.
+
+        Keyword arguments:
+        baseURL -- a tuple with directory name and manga website url
+        """
         # Set base dir location
         this.location = os.path.join(os.getcwd(), baseURL[0])
         # Set base URL
@@ -37,6 +42,7 @@ class Downloader:
 
     # Function to get chapters list and latest chapter number
     def getChapterList(this):
+        """Get list of chapters in manga. Fill in missing chapters."""
         # Send request to get list of all chapters
         res = requests.get(this.baseURL)
         # Set latest chapter number search string
@@ -68,6 +74,11 @@ class Downloader:
 
     # Function to get pages for given chapter
     def getPages(this, chapterNo):
+        """Get all pages in given chapter.
+
+        Keyword arguments:
+        chapterNo -- string specifying the chapter number
+        """
         # Set chapter file name
         fileName = os.path.join(this.location, "Chapter "+chapterNo+".pdf")
 
@@ -103,6 +114,11 @@ class Downloader:
 
     # Function to begin download
     def download(this, chapterLimit):
+        """Initialise and start threads to download chapters till chapter limit.
+
+        Keyword arguments:
+        chapterLimit -- integer specifying the chapter limit
+        """
         # Set chapter limit
         this.chapterLimit = this.latestChapter
 
