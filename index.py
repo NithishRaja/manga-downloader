@@ -4,7 +4,7 @@
 #
 
 # Dependencies
-import sys
+import sys, argparse
 from downloader import Downloader
 
 # Initialise baseURLs
@@ -16,19 +16,38 @@ baseURL = {
     "HAIKYUU" : ("Haikyuu", "https://haikyuu-manga-online.com/")
 }
 
-# Check if CLI argument for manga name is passed
-if len(sys.argv) > 1 and sys.argv[1] in baseURL.keys():
-    # Initialise downloader object
-    downloader = Downloader(baseURL[sys.argv[1]])
-else:
-    print("\nERROR: Missing argument. Mention name of manga to download.\n")
-    for key in baseURL.keys():
-        print(key, baseURL[key][0])
-    print("\n")
-    sys.exit()
+# Initialise a argument parser
+parser = argparse.ArgumentParser(prog="manga-downloader")
 
-# Check if CLI argument for chapter limit is passed
-if len(sys.argv) > 2:
-    downloader.downloadAll(int(sys.argv[2]))
-else:
-    downloader.downloadAll()
+# Specify arguments
+parser.add_argument("manga", nargs="+", choices=["BNHA", "OPM", "DBS", "DMNSLYR", "HAIKYUU"], help="Key value for each manga")
+# Initialise a group to add mutually exclusive arguments
+group = parser.add_mutually_exclusive_group()
+group.add_argument("--trial", action='store_true', help="Flag for trial run")
+group.add_argument("--chapterLimit", "-c", type=int, help="Chapter limit")
+group.add_argument("--singleChapter", "-s", type=int, help="Chapter number")
+
+# Parse arguments
+args = parser.parse_args()
+
+# Check if trial flag was passed
+if args.trial:
+    for key in args.manga:
+        # Initialise downloader object
+        downloader = Downloader(baseURL[key])
+        # Download first 4 chapters
+        downloader.downloadAll(4)
+# Check if chapterLimit flag was passed
+elif not args.chapterLimit==None:
+    for key in args.manga:
+        # Initialise downloader object
+        downloader = Downloader(baseURL[key])
+        # Download first 4 chapters
+        downloader.downloadAll(args.chapterLimit)
+# Check if chapterLimit flag was passed
+elif not args.singleChapter==None:
+    for key in args.manga:
+        # Initialise downloader object
+        downloader = Downloader(baseURL[key])
+        # Download first 4 chapters
+        downloader.downloadOne(args.singleChapter)
