@@ -6,3 +6,6 @@ bs4
 
 # Package for converting images to pdf
 img2pdf
+
+# Package for displaying progress bar
+tqdm
