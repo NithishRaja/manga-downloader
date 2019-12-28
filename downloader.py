@@ -6,6 +6,7 @@
 # Dependencies
 import os, threading, re, time
 import requests, bs4, img2pdf
+from tqdm import tqdm
 
 # Define downloader class
 class Downloader:
@@ -16,6 +17,8 @@ class Downloader:
         Keyword arguments:
         baseURL -- a tuple with directory name and manga website url
         """
+        # Set the manga name
+        this.mangaName = baseURL[0]
         # Set base dir location
         this.location = os.path.join(os.getcwd(), baseURL[0])
         # Set base URL
@@ -97,7 +100,7 @@ class Downloader:
         # Initialise pages array
         pages = []
         # Iterate over each image
-        for currentPage in range(len(links)):
+        for currentPage in tqdm(range(len(links)), desc=this.mangaName+", Chapter "+chapterNo, leave=False, unit="page"):
             # Get image URL
             imageURL = links[currentPage].attrs[this.imageURLAttribute]
             # Get image from its URL
