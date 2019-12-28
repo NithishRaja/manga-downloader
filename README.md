@@ -18,6 +18,7 @@
 * Code runs five threads at once
 * Each chapter is downloaded as a PDF file
 * If a chapter already exists, it is not downloaded again
+* Progress bar displays the current status of download
 
 ## Updates
 
