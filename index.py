@@ -20,7 +20,7 @@ baseURL = {
 parser = argparse.ArgumentParser(prog="manga-downloader")
 
 # Specify arguments
-parser.add_argument("manga", nargs="+", choices=["BNHA", "OPM", "DBS", "DMNSLYR", "HAIKYUU"], help="Key value for each manga")
+parser.add_argument("manga", nargs="+", choices=[key for key in baseURL.keys()], help="Key value for each manga")
 # Initialise a group to add mutually exclusive arguments
 group = parser.add_mutually_exclusive_group()
 group.add_argument("--trial", action='store_true', help="Flag for trial run")
