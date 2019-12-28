@@ -147,3 +147,25 @@ class Downloader:
                 time.sleep(3)
             # Start the thread
             currentThread.start()
+
+    # Function to begin download
+    def downloadOne(this, chapterNo):
+        """Initialise and start a thread to download one chapter.
+
+        Keyword arguments:
+        chapterNo -- integer specifying the chapter number
+        """
+        # Check if chapter limit is lesser than latest chapter
+        if not type(chapterNo) == int and this.latestChapter > chapterNo:
+            print("Given chapter number exceeds the latest chapter")
+
+        # Initialise thread to download chapter
+        threadObj = threading.Thread(target=this.getPages, args=[str(chapterNo)])
+
+        # If no of active threads is greater than active thread limit, wait till a thread finishes execution
+        while threading.active_count() > this.activeThreadLimit:
+            # Wait for 3 seconds and check again
+            time.sleep(3)
+
+        # Start thread
+        threadObj.start()
