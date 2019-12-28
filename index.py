@@ -29,6 +29,6 @@ else:
 
 # Check if CLI argument for chapter limit is passed
 if len(sys.argv) > 2:
-    downloader.download(int(sys.argv[2]))
+    downloader.downloadAll(int(sys.argv[2]))
 else:
-    downloader.download()
+    downloader.downloadAll()

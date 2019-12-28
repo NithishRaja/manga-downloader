@@ -113,7 +113,7 @@ class Downloader:
         fileObject.close()
 
     # Function to begin download
-    def download(this, chapterLimit):
+    def downloadAll(this, chapterLimit):
         """Initialise and start threads to download chapters till chapter limit.
 
         Keyword arguments:
