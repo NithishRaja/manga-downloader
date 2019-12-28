@@ -4,17 +4,15 @@
 #
 
 # Dependencies
-import sys, argparse
+import sys, argparse, json
 from downloader import Downloader
 
-# Initialise baseURLs
-baseURL = {
-    "BNHA" : ("Boku no hero academia", "https://myheromanga.com/"),
-    "OPM" : ("One punch man", "https://one-punchmanmanga.com/"),
-    "DBS" : ("Dragon ball super", "https://readdragonballsuper.com/"),
-    "DMNSLYR" : ("Demon slayer", "https://demonslayermanga.online/"),
-    "HAIKYUU" : ("Haikyuu", "https://haikyuu-manga-online.com/")
-}
+# Open file to read base URLs
+fileObject = open("data.json")
+# Initialise base URLs
+baseURL = json.load(fileObject)
+# Close file object
+fileObject.close()
 
 # Initialise a argument parser
 parser = argparse.ArgumentParser(prog="manga-downloader")
