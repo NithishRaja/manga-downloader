@@ -21,7 +21,8 @@ parser = argparse.ArgumentParser(prog="manga-downloader")
 parser.add_argument("manga", nargs="+", choices=[key for key in baseURL.keys()], help="Key value for each manga")
 # Initialise a group to add mutually exclusive arguments
 group = parser.add_mutually_exclusive_group()
-group.add_argument("--trial", action='store_true', help="Flag for trial run")
+group.add_argument("--trial", action='store_true', help="Download first 4 chapters")
+group.add_argument("--update", action='store_true', help="Downloading latest chapter")
 group.add_argument("--chapterLimit", "-c", type=int, help="Chapter limit")
 group.add_argument("--singleChapter", "-s", type=int, help="Chapter number")
 
@@ -49,3 +50,17 @@ elif not args.singleChapter==None:
         downloader = Downloader(baseURL[key])
         # Download first 4 chapters
         downloader.downloadOne(args.singleChapter)
+# Check if update flag is set
+elif args.update:
+    for key in args.manga:
+        # Initialise downloader object
+        downloader = Downloader(baseURL[key])
+        # Download the most recent chapter
+        downloader.downloadOne(downloader.latestChapter)
+# If all else fails download all chapters
+else:
+    for key in args.manga:
+        # Initialise downloader object
+        downloader = Downloader(baseURL[key])
+        # Download all chapters
+        downloader.downloadAll()
