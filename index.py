@@ -29,38 +29,27 @@ group.add_argument("--singleChapter", "-s", type=int, help="Chapter number")
 # Parse arguments
 args = parser.parse_args()
 
-# Check if trial flag was passed
-if args.trial:
-    for key in args.manga:
-        # Initialise downloader object
-        downloader = Downloader(baseURL[key])
+# Iterate over all mangas to download
+for key in args.manga:
+    # Initialise downloader object
+    downloader = Downloader(baseURL[key])
+    # Check if trial flag was passed
+    if args.trial:
         # Download first 4 chapters
         downloader.downloadAll(4)
-# Check if chapterLimit flag was passed
-elif not args.chapterLimit==None:
-    for key in args.manga:
-        # Initialise downloader object
-        downloader = Downloader(baseURL[key])
-        # Download first 4 chapters
-        downloader.downloadAll(args.chapterLimit)
-# Check if chapterLimit flag was passed
-elif not args.singleChapter==None:
-    for key in args.manga:
-        # Initialise downloader object
-        downloader = Downloader(baseURL[key])
-        # Download first 4 chapters
-        downloader.downloadOne(args.singleChapter)
-# Check if update flag is set
-elif args.update:
-    for key in args.manga:
-        # Initialise downloader object
-        downloader = Downloader(baseURL[key])
+    # Check if update flag is set
+    elif args.update:
         # Download the most recent chapter
         downloader.downloadOne(downloader.latestChapter)
-# If all else fails download all chapters
-else:
-    for key in args.manga:
-        # Initialise downloader object
-        downloader = Downloader(baseURL[key])
+    # Check if chapterLimit flag was passed
+    elif not args.singleChapter==None:
+        # Download first 4 chapters
+        downloader.downloadOne(args.singleChapter)
+    # Check if chapterLimit flag was passed
+    elif not args.chapterLimit==None:
+        # Download first 4 chapters
+        downloader.downloadAll(args.chapterLimit)
+    # If all else fails download all chapters
+    else:
         # Download all chapters
         downloader.downloadAll()
