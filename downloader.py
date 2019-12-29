@@ -11,7 +11,7 @@ from tqdm import tqdm
 # Define downloader class
 class Downloader:
     # Define init function
-    def __init__(this, baseURL):
+    def __init__(this, baseURL, baseDir=os.getcwd()):
         """Initialise variables to default value.
 
         Keyword arguments:
@@ -20,7 +20,9 @@ class Downloader:
         # Set the manga name
         this.mangaName = baseURL[0]
         # Set base dir location
-        this.location = os.path.join(os.getcwd(), baseURL[0])
+        this.baseDir = baseDir
+        # Set download location
+        this.location = os.path.join(this.baseDir, this.mangaName)
         # Set base URL
         this.baseURL = baseURL[1]
         # Set active thread limit
