@@ -14,6 +14,13 @@ baseURL = json.load(fileObject)
 # Close file object
 fileObject.close()
 
+# Open file to read configurations
+fileObject = open("config.json")
+# Initialise config
+config = json.load(fileObject)
+# Close file object
+fileObject.close()
+
 # Initialise a argument parser
 parser = argparse.ArgumentParser(prog="manga-downloader")
 
@@ -32,11 +39,13 @@ args = parser.parse_args()
 # Iterate over all mangas to download
 for key in args.manga:
     # Initialise downloader object
-    downloader = Downloader(baseURL[key])
+    downloader = Downloader(baseURL[key], config["downloadLocation"])
+    # Set active thread limit
+    downloader.activeThreadLimit = config["activeThreadLimit"]
     # Check if trial flag was passed
     if args.trial:
         # Download first 4 chapters
-        downloader.downloadAll(4)
+        downloader.downloadAll(config["trialChapterLimit"])
     # Check if update flag is set
     elif args.update:
         # Download the most recent chapter

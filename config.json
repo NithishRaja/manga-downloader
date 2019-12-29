@@ -1,0 +1,5 @@
+{
+  "activeThreadLimit" : 5,
+  "trialChapterLimit" : 4,
+  "downloadLocation" : "."
+}
