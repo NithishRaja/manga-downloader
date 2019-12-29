@@ -8,12 +8,14 @@
 ### Downloading all chapters
 
 * to download all chapters of given manga, run `python index.py BNHA`
-* to download only till a certain chapter, run `python index.py BNHA --chapterLimit 10`
+* to download only till a certain chapter, run `python index.py BNHA --chapterLimit <chapter number>`
 
-### Downloading only the latest chapter
+### Downloading only a single chapter
 
-* run `python index.py BNHA --latestChapter`
+* run `python index.py BNHA --singleChapter <chapter number>`
 * the above command downloads only the chapter of given manga
+* run `python index.py BNHA --update`
+* the above command downloads only the latest chapter of the manga
 
 ### Downloading for trial
 
@@ -21,15 +23,20 @@
 * the above command downloads only a few initial chapters
 * this can be used to try out a manga without having to download it completely
 
-### Downloading the latest chapter
-
-* run `python index.py BNHA --update`
-* the above command downloads only the latest chapter of the manga
-
 ### Downloading multiple mangas
 
 * to download multiple mangas at once, run `python index.py BNHA OPM DBS`
 * the keyword of each manga should be mentioned one after another before any flags
+
+## Supported mangas
+
+| Manga key | Manga name |
+| --- | --- |
+| BNHA | Boku no hero academia |
+| OPM | One punch man |
+| DBS | Dragon ball super |
+| DMNSLYR | Demon slayer |
+| HAIKYUU | Haikyuu |
 
 ## Configuration
 
